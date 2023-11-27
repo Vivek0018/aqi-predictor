@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Index Predictor</title>
+    <link rel="stylesheet" href="{% static '/styles/style.css' %}"> 
+</head>
+<body>
+    <header>
+        <div class="header-data max-1500">
+            <div class="logo-container">
+                <img src="{% static '/images/AQILogo.png' %}" alt="AQI" class="logo">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="wrapper">
+            <div class="main-container max-1500">
+                <div class="heading-container">
+                    <div class="text-container">
+                        <h1>
+                            Air Quality Index Predictor
+                        </h1>
+                        <p class="caption">
+                            Based on Time Series Forecasting Machine Learning Model 
+                        </p>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="a">
+                        <div class="aa">
+                            <div class="a-a">
+                                <div class="a-a-a">
+                                    <h3 class="medium">predict air quality of a city</h3>
+                                </div>
+                                <form id="myForm" class="a-a-a-form a-a-b">
+                                    {% csrf_token %}
+                                    <input type="text" placeholder="search by city name..." class="input">
+                                    <button class="submit-form" type="submit">
+                                        <svg class="small search-icon small-svg"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>                                
+                                    </button>                              
+                                </form>
+                            </div>
+                            <div class="a-b">
+                                <div class="description small">
+                                    <p title="description aqi prediction">
+                                        Enter any City name to view the Predictions of Air Quality Index of 30 days from now. 
+                                        If the entered city has any past data then Future values are predicted using Machine Learning Models.
+                                    </p>
+                                    <div class="more-a">
+                                        <a href="#aqi-def" title="What is AQI" class="a-b-a">What is AQI ?</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section id="e-ex">
+        <div class="e max-1500">
+            <div class="e-a">
+                <div class="e-a-a">
+                    <div class="e-header margin-10">
+                        <h2>
+                            Some Popular Cities
+                        </h2>
+                    </div>
+                    <div class="cities-e">
+                        <div class="e-a-a-a">
+                            <div class="e-a-a-a-a e-1" onclick="fetchDataTrigger('Delhi')">
+                                <div class="e-city-data">
+                                    <div class="e-img-container">
+                                        <img src="/static/images/DelhiImg.jpg" alt="Delhi">
+                                    </div>
+                                    <div class="e-city-head margin-10">
+                                        <h4 class="large white-txt">Delhi</h4>
+                                    </div>
+                                </div>
+                                <div class="e-a-hidden">
+                                    <div class="data-sec-e  white-txt">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="small-svg" viewBox="0 0 448 512"><path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"/></svg>
+                                        <h4>View AQI</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="e-a-a-a-a e-2" onclick="fetchDataTrigger('New York')">
+                                <div class="e-city-data">
+                                    <div class="e-img-container">
+                                        <img src="/static/images/NewYorkImg.jpeg" alt="NewYork">
+                                    </div>
+                                    <div class="e-city-head margin-10">
+                                        <h4 class="large white-txt">New York</h4>
+                                    </div>
+                                </div>
+                                <div class="e-a-hidden">
+                                    <div class="data-sec-e  white-txt">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="small-svg" viewBox="0 0 448 512"><path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"/></svg>
+                                        <h4>View AQI</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="e-a-a-a-a e-3" onclick="fetchDataTrigger('Tokyo')">
+                                <div class="e-city-data">
+                                    <div class="e-img-container">
+                                        <img src="/static/images/TokyoImg.jpeg" alt="Tokyo">
+                                    </div>
+                                    <div class="e-city-head margin-10">
+                                        <h4 class="large white-txt">Tokyo</h4>
+                                    </div>
+                                </div>
+                                <div class="e-a-hidden">
+                                    <div class="data-sec-e  white-txt">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="small-svg" viewBox="0 0 448 512"><path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"/></svg>
+                                        <h4>View AQI</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="aqi-def" id="aqi-def">
+        <div class="max-1500  bg-aqi">
+            <div class="b">
+                <div class="b-header">
+                    <h2>
+                        What is AQI ?
+                    </h2>
+                </div>
+                <div class="b-data">
+                    <div class="b-b">
+                        <p class="small">
+                            &nbsp;&nbsp;The Air Quality Index (AQI) is a numerical scale that communicates the level of air pollution in a specific area. It consolidates data on pollutants like ozone, particulate matter, sulfur dioxide, nitrogen dioxide, and carbon monoxide into a single score, offering a standardized measure of air quality. Ranging from 0 to 500, higher AQI values indicate poorer air quality and potential health risks. The scale is divided into categories, each corresponding to different health implications, helping the public and policymakers understand and address air pollution's impact on health and the environment. Regular monitoring of AQI aids in promoting air quality awareness and public well-being.
+                        </p>
+                        <ul>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">Ground-level Ozone (O3): </h4>
+                                <p class="b-b-des small">Ozone is a major component of smog and is formed by the reaction of pollutants emitted by vehicles, industrial facilities, and other sources. It can have respiratory and other health effects.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">Particulate Matter (PM10 and PM2.5)</h4>
+                                <p class="b-b-des small">PM10 represents inhalable particles with diameters generally 10 micrometers and smaller, while PM2.5 represents fine inhalable particles with diameters that are generally 2.5 micrometers and smaller. These particles can penetrate the respiratory system and have adverse health effects.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">Sulfur Dioxide (SO2):</h4>
+                                <p class="b-b-des small">SO2 is produced by burning fossil fuels containing sulfur, primarily in power plants and industrial facilities. It can cause respiratory problems and contribute to acid rain.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">Nitrogen Dioxide (NO2):</h4>
+                                <p class="b-b-des small">NO2 is produced by combustion processes, including those in vehicles and power plants. It can irritate the lungs and contribute to respiratory problems.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">Carbon Monoxide (CO): </h4>
+                                <p class="b-b-des small">CO is a colorless, odorless gas produced by incomplete combustion of carbon-containing fuels. It can interfere with the body's ability to transport oxygen and can have adverse health effects.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="more-des">
+                        <h3>How to Calculate AQI</h3>
+                        <p class="small">
+                            &nbsp;&nbsp;The Air Quality Index (AQI) is calculated based on the concentrations of specific air pollutants, including ground-level ozone (O3), particulate matter (PM10 and PM2.5), sulfur dioxide (SO2), nitrogen dioxide (NO2), and carbon monoxide (CO). The AQI provides a standardized measure to assess the potential health risks associated with these pollutants.
+                        </p>
+                        <div class="b-c">
+                            <p clsss="txt-center small b-c-f">AQI : max(all pollutants)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="aqi-val" id="aqi-val">
+        <div class="max-1500">
+            <div class="b">
+                <div class="b-header">
+                    <h2>
+                        AQI Ranges
+                    </h2>
+                </div>
+                <div class="b-data">
+                    <div class="b-b">
+                        <p class="small">
+                            &nbsp;&nbsp;The Air Quality Index (AQI) is a numerical scale used to communicate how polluted the air currently is or how polluted it is forecast to become. It provides a way to understand and compare the air quality in different locations. The AQI is typically divided into different categories, each corresponding to a different level of health concern. Different countries may have their own variations of AQI, but many of them share similar principles.
+
+                            Here's a general guide to AQI values and their associated air quality levels:
+                        </p>
+                        <ul>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">0-50: Good</h4>
+                                <p class="b-b-des small">Air quality is considered satisfactory, and air pollution poses little or no risk.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">51-100: Moderate</h4>
+                                <p class="b-b-des small">Air quality is acceptable; however, there may be some pollutants that are a concern for a very small number of people who are unusually sensitive to air pollution.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">101-150: Unhealthy for Sensitive Groups</h4>
+                                <p class="b-b-des small">Members of sensitive groups (e.g., individuals with respiratory or heart conditions, children, and older adults) may experience health effects. The general public is less likely to be affected.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">151-200: Unhealthy</h4>
+                                <p class="b-b-des small">Everyone may begin to experience adverse health effects, and members of sensitive groups may experience more serious effects.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">201-300: Very Unhealthy</h4>
+                                <p class="b-b-des small">Health alert: everyone may experience more serious health effects.</p>
+                            </li>
+                            <li class="b-b-items">
+                                <h4 class="b-b-h">301-500: Hazardous</h4>
+                                <p class="b-b-des small">Health warnings of emergency conditions. The entire population is likely to be affected.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="img-des">
+                        <div class="data-img">
+                            <img src="/static/images/aqi_mini.webp" alt="AQI Ranges">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="results"></section>
+    <section class="d-s">
+        <div class="max-1500">
+            <div class="b d">
+                <div class="b-header">
+                    <h2>
+                        Model Information
+                    </h2>
+                </div>
+                <div class="d-a">
+                    <ul>
+                        <li class="d-items">
+                            <h3>
+                                    Algorithm Used : Prophet - A Time Series Algorithm by Facebook
+                                    <a href="http://facebook.github.io/prophet/" nofollow ref="anonymous">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="small-svg" viewBox="0 0 640 512"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg>
+                                    </a>
+                            </h3>
+                            <p class="small">&nbsp;&nbsp;FB Prophet is an open-source time series forecasting tool developed by Facebook. It is designed to be easy to use and fast, making it suitable for a wide range of applications. FB Prophet is based on a decomposable additive model, which means that it breaks down the time series data into three components: trend, seasonality, and holidays. The trend component represents the overall direction of the data, while the seasonality component captures the periodic fluctuations in the data. The holidays component accounts for the impact of known events, such as holidays or promotional campaigns. FB Prophet is particularly well-suited for forecasting time series data that exhibits strong seasonality or holiday effects.</p>
+                        </li>
+                        <li class="d-items">
+                            <h3>
+                                Data Source : WAQI API 
+                                <a href="https://aqicn.org/api/" nofollow ref="anonymous">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="small-svg" viewBox="0 0 640 512"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg>
+                                </a>
+                            </h3>
+                            <p class="small">
+                                &nbsp;&nbsp;
+                                The WAQI API is a tool that provides air quality data for over 100,000 stations worldwide. To use the API, you'll need to create an account and obtain an API token. Once you have your token, you can use it to make HTTP requests to the WAQI API to retrieve real-time, historical, or forecast AQI data. The response will be in JSON format, which you can parse to extract the desired data.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="c max-1500">
+            <div class="c-a">
+                <div class="c-a-a">
+                    <div class="c-a-a-a logo-container">
+                        <img src="{% static '/images/AQILogo.png' %}" alt="AQI" class="logo">
+                    </div>
+                    <div class="c-a-z">
+                        <span class="small">© AQI All rights reserved</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{%static 'scripts/script.js'%}"></script>
+</body>
+</html>
