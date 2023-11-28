@@ -5,12 +5,9 @@ from sktime.forecasting.naive import NaiveForecaster
 
 from sktime.performance_metrics.forecasting import mean_absolute_percentage_error
 import pandas as pd
-# from sktime.utils.plotting import plot_series
 import sys
-# from sklearn.metrics import mean_absolute_error, r2_score
 from sktime.forecasting.arima import AutoARIMA
 from sktime.forecasting.fbprophet import Prophet
-# import matplotlib.pyplot as plt
 import numpy as np
 from datetime import timedelta
 
